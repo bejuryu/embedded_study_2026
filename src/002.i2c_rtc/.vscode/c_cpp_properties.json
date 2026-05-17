@@ -1,0 +1,23 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            // Linux는 확장자 없음
+            "compilerPath": "riscv32-esp-elf-g++",
+            "compileCommands": "${workspaceFolder}/build/compile_commands.json",
+            "cStandard": "c11",
+            "cppStandard": "c++23",
+            "intelliSenseMode": "linux-gcc-riscv32"
+        },
+        {
+            "name": "Win32",
+            // Windows는 뒤에 .exe를 명시해 주는 것이 안전함
+            "compilerPath": "riscv32-esp-elf-g++.exe",
+            "compileCommands": "${workspaceFolder}/build/compile_commands.json",
+            "cStandard": "c11",
+            "cppStandard": "c++23",
+            "intelliSenseMode": "windows-gcc-riscv32"
+        }
+    ],
+    "version": 4
+}
