@@ -1,0 +1,20 @@
+.cache/
+.vscode/
+.idea/
+
+# ESP-IDF 빌드 아티팩트
+build/
+sdkconfig.old
+*.bin
+*.elf
+*.map
+
+# ESP-IDF 컴포넌트 매니저 패키지 (NPM의 node_modules와 동일)
+managed_components/
+dependencies.lock
+
+# IDE 및 OS 임시 파일
+.vscode/
+.idea/
+.DS_Store
+*.swp
