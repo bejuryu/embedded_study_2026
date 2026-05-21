@@ -1,0 +1,41 @@
+.cache/
+.vscode/
+.idea/
+build-*/
+
+# ESP-IDF 빌드 아티팩트
+build/
+sdkconfig.old
+*.bin
+*.elf
+*.map
+
+# ESP-IDF 컴포넌트 매니저 패키지 (NPM의 node_modules와 동일)
+managed_components/
+dependencies.lock
+
+# IDE 및 OS 임시 파일
+.DS_Store
+*.swp
+
+# ═══════════════════════════════════════════════
+# NXP GUI-Guider 프로젝트
+# ═══════════════════════════════════════════════
+# 자동 생성 코드 (.guiguider에서 "Generate Code"로 재생성 가능)
+# 폰트 C 파일만 수십 MB (Outfit_Bold_320.c = 24MB)
+guiguider/clock/generated/
+
+# LVGL 라이브러리 (GUI-Guider 번들 포함)
+lvgl/
+
+# 시뮬레이터 빌드 산출물
+lvgl-simulator/
+
+# 네이티브 라이브러리 바이너리
+lib/
+
+# 포팅 레이어 (자동 생성)
+ports/
+
+# 임시 파일
+temp/

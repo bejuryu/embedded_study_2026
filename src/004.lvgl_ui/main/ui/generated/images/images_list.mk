@@ -1,0 +1,1 @@
+GEN_CSRCS += _battery_RGB565A8_50x30.c

@@ -1,0 +1,1 @@
+GEN_CSRCS += lv_font_Outfit_Medium_22.c lv_font_Outfit_Bold_320.c lv_font_Outfit_Bold_260.c lv_font_Outfit_Light_80.c lv_font_NotoSansKR_Regular_22.c

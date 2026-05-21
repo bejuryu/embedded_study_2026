@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1280">
+  <title>디지털 탁상시계 - M5Stack Tab5 UI Prototype</title>
+  <meta name="description" content="Dieter Rams inspired pastel digital desk clock UI for M5Stack Tab5 (1280x720)">
+
+  <!-- Google Fonts: Outfit (EN) + Noto Sans KR (KO) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&family=Noto+Sans+KR:wght@400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="screen" class="screen">
+
+    <!-- ═══ Top Bar ═══ -->
+    <header class="top-bar">
+      <!-- 상단 좌측: 년월일 -->
+      <div id="date-display" class="date-display">2026.05.20</div>
+
+      <!-- 상단 우측: WiFi, 배터리, 충전 -->
+      <div class="status-bar">
+        <div id="wifi-status" class="status-item" title="WiFi 연결됨">
+          <!-- WiFi Icon SVG -->
+          <svg class="icon icon-wifi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12.55a11 11 0 0 1 14.08 0"/>
+            <path d="M1.42 9a16 16 0 0 1 21.16 0"/>
+            <path d="M8.53 16.11a6 6 0 0 1 6.95 0"/>
+            <circle cx="12" cy="20" r="1"/>
+          </svg>
+        </div>
+
+        <div id="battery-voltage" class="status-item" title="배터리 전압">
+          <!-- Battery Icon SVG -->
+          <svg class="icon icon-battery" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="1" y="6" width="18" height="12" rx="2" ry="2"/>
+            <line x1="23" y1="10" x2="23" y2="14"/>
+            <rect class="battery-fill" x="3" y="8" width="12" height="8" rx="1" fill="currentColor" opacity="0.25"/>
+          </svg>
+          <span class="status-text">4.2V</span>
+        </div>
+
+        <div id="charge-status" class="status-item charging" title="충전 중">
+          <!-- Charging Icon SVG -->
+          <svg class="icon icon-charge" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+          </svg>
+        </div>
+      </div>
+    </header>
+
+    <!-- ═══ Main Clock (Center) ═══ -->
+    <main class="clock-area">
+      <div class="clock-container">
+        <div class="clock-time">
+          <span id="clock-hours" class="clock-digits">11</span>
+          <span class="clock-colon">:</span>
+          <span id="clock-minutes" class="clock-digits">08</span>
+          <span id="clock-seconds" class="clock-seconds">32</span>
+        </div>
+      </div>
+
+      <!-- 시계 아래: 요일, 지역, 날씨, 온도 -->
+      <div id="weather-info" class="weather-info">
+        <span class="weather-day">화요일</span>
+        <span class="weather-sep">·</span>
+        <span class="weather-location">서울</span>
+        <span class="weather-sep">·</span>
+        <span class="weather-condition">맑음</span>
+        <span class="weather-sep">·</span>
+        <span class="weather-temp">24°C</span>
+      </div>
+    </main>
+
+    <!-- ═══ Bottom: Quote ═══ -->
+    <footer class="quote-area">
+      <p id="daily-quote" class="daily-quote">오늘 할 수 있는 일을 내일로 미루지 마라</p>
+    </footer>
+
+  </div>
+
+  <script src="clock.js"></script>
+</body>
+</html>

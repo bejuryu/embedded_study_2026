@@ -1,0 +1,264 @@
+/* ═══════════════════════════════════════════════════════
+   Digital Desk Clock – Dieter Rams Pastel Style
+   Target: M5Stack Tab5 (1280 × 720)
+   
+   Fonts used (max 5):
+   ───────────────────────────────────────────────────────
+   1. Outfit 700 (Bold)     → Clock digits
+   2. Outfit 500 (Medium)   → Date header
+   3. Outfit 300 (Light)    → Status bar, seconds
+   4. Noto Sans KR 500      → Weather info (Korean)
+   5. Noto Sans KR 400      → Daily quote (Korean)
+   ═══════════════════════════════════════════════════════ */
+
+/* ── Design Tokens ── */
+:root {
+  /* Palette — warm pastel, vintage wood compatible */
+  --bg-primary:     #F5F0E8;
+  --bg-secondary:   #EDE7DB;
+  --text-primary:   #2D2D2D;
+  --text-secondary: #6B6560;
+  --text-muted:     #9B938A;
+  --accent-warm:    #C4A882;
+  --accent-coral:   #D4A574;
+  --separator:      #D5CEC4;
+  --charging-green: #8BA888;
+
+  /* Sizes */
+  --screen-w: 1280px;
+  --screen-h: 720px;
+}
+
+/* ── Reset ── */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background: #3A3530;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* ── Screen Container ── */
+.screen {
+  width: var(--screen-w);
+  height: var(--screen-h);
+  background: var(--bg-primary);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  /* Subtle warm texture gradient */
+  background-image:
+    radial-gradient(ellipse at 20% 50%, rgba(212, 165, 116, 0.06) 0%, transparent 70%),
+    radial-gradient(ellipse at 80% 30%, rgba(196, 168, 130, 0.05) 0%, transparent 60%);
+}
+
+/* ═══════════════════════════════════════════════════════
+   TOP BAR — Date (left) + Status icons (right)
+   ═══════════════════════════════════════════════════════ */
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 48px 0;
+  flex-shrink: 0;
+  height: 52px;
+}
+
+/* 년월일 — Outfit Medium */
+.date-display {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 500;
+  font-size: 22px;
+  color: var(--text-secondary);
+  letter-spacing: 2px;
+}
+
+/* Status bar — 우측 아이콘 그룹 */
+.status-bar {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.status-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-muted);
+  transition: color 0.3s ease;
+}
+
+.status-item.charging {
+  color: var(--charging-green);
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+}
+
+.icon-charge {
+  width: 18px;
+  height: 18px;
+}
+
+.status-text {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 300;
+  font-size: 15px;
+  letter-spacing: 0.5px;
+}
+
+/* ═══════════════════════════════════════════════════════
+   MAIN CLOCK — Center, dominant
+   ═══════════════════════════════════════════════════════ */
+.clock-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 0;
+}
+
+.clock-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.clock-time {
+  display: flex;
+  align-items: baseline;
+  position: relative;
+}
+
+/* Clock digits — Outfit Bold */
+.clock-digits {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 320px;
+  color: var(--text-primary);
+  line-height: 0.85;
+  letter-spacing: -8px;
+}
+
+.clock-colon {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 260px;
+  color: var(--accent-warm);
+  line-height: 0.85;
+  margin: 0 2px;
+  position: relative;
+  top: -14px;
+  animation: colonPulse 2s ease-in-out infinite;
+}
+
+/* Seconds — Outfit Light, smaller */
+.clock-seconds {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 300;
+  font-size: 80px;
+  color: var(--text-muted);
+  margin-left: 14px;
+  align-self: flex-end;
+  position: relative;
+  bottom: 10px;
+  letter-spacing: 1px;
+  min-width: 80px;
+}
+
+/* Colon blink animation */
+@keyframes colonPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* ═══════════════════════════════════════════════════════
+   WEATHER INFO — Below clock
+   ═══════════════════════════════════════════════════════ */
+.weather-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 10px;
+  padding: 10px 36px;
+  background: var(--bg-secondary);
+  border-radius: 40px;
+  border: 1px solid var(--separator);
+}
+
+.weather-day,
+.weather-location,
+.weather-condition {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 500;
+  font-size: 22px;
+  color: var(--text-secondary);
+}
+
+.weather-temp {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 500;
+  font-size: 22px;
+  color: var(--accent-coral);
+}
+
+.weather-sep {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 300;
+  font-size: 22px;
+  color: var(--separator);
+  user-select: none;
+}
+
+/* ═══════════════════════════════════════════════════════
+   QUOTE — Bottom single line
+   ═══════════════════════════════════════════════════════ */
+.quote-area {
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 0 60px 28px;
+  height: 72px;
+}
+
+.daily-quote {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 400;
+  font-size: 22px;
+  color: var(--text-secondary);
+  letter-spacing: 1.5px;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  position: relative;
+}
+
+/* Subtle underline accent */
+.daily-quote::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 2px;
+  background: var(--accent-warm);
+  border-radius: 1px;
+  opacity: 0.5;
+}
