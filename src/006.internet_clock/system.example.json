@@ -1,0 +1,13 @@
+{
+  "wifi": {
+    "ssid": "",
+    "password": ""
+  },
+  "ntp": "pool.ntp.org",
+  "timezone": "KST-9",
+  "geo_location": {
+    "location": "BUSAN",
+    "latitude": 35.1796,
+    "longitude": 129.0756
+  }
+}

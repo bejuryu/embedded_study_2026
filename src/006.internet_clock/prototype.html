@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solari Flip Clock Prototype</title>
+    <!-- Use Google Fonts to simulate the thick Archivo-ExtraBold and clean UI fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@700&family=Inter:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --screen-bg: #070708;
+            --ink: #D8D3C5; /* Candidate A: Warm aged white print ink */
+            --accent: #F0CF86; /* Warm golden light accent */
+            --pill-ink: #16140D;
+            --text-bright: #D8D3C5; /* Match ink color for consistency */
+            --text-dim: #A4A095; /* Muted gray for footer hierarchy */
+            --text-sep: #55554D;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #333; /* Outer environment background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Exactly 1280x720 canvas - Background is the cinematic product photo of the 3-window flip clock casing */
+        .screen {
+            width: 1280px;
+            height: 720px;
+            background: url('assets/bakelite_casing.png') no-repeat center center;
+            background-size: cover;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        }
+
+        /* 
+           Skeuomorphic window alignment. 
+           The bezels, 3D card textures, shadows, and splits are pre-baked in the background photo.
+           We place the digit overlay containers exactly over the physical card zones.
+        */
+        .housing-window {
+            position: absolute;
+            top: 100px;
+            width: 300px;
+            height: 520px;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        /* 3px black split line drawn exactly on top of the text to divide the digit in half */
+        .housing-window::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #070708; /* Deep black gap */
+            z-index: 10;
+            transform: translateY(-50%);
+            box-shadow: 0 1px 0px rgba(255, 255, 255, 0.12); /* Subtle light catch on the lower card lip */
+        }
+
+        .win-hh {
+            left: 100px;
+        }
+
+        .win-mm {
+            left: 480px;
+        }
+
+        .win-ss {
+            left: 860px;
+        }
+
+        /* Digit text styled to fit perfectly on the pre-baked cards */
+        .digit {
+            position: relative;
+            z-index: 5;
+            font-family: 'Antonio', sans-serif;
+            font-weight: 700; /* Bold weight - clean, high-contrast, and realistic print look */
+            color: var(--ink);
+            font-size: 290px;
+            line-height: 290px;
+            letter-spacing: 0px; /* Antonio characters fit perfectly inside 300px width with default spacing */
+            text-align: center;
+            width: 100%;
+            margin-top: -22px; /* Precise vertical centering to align with the pre-baked split line */
+        }
+
+        /* Footer positioned at the bottom 100px space, designed to look like sleek product print text */
+        /* Footer positioned at the bottom 100px space, designed to look like sleek product print text */
+        .footer {
+            position: absolute;
+            left: 110px;
+            right: 110px;
+            top: 664px; /* Lowered slightly to increase gap from window without hitting the bottom */
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+            font-size: 22px;
+            letter-spacing: 1px;
+            z-index: 2;
+        }
+
+        .footer-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-bright);
+        }
+
+        .pill {
+            background-color: var(--accent);
+            color: var(--pill-ink);
+            padding: 2px 12px;
+            border-radius: 50px;
+            font-size: 18px;
+            transform: translateY(-2px);
+        }
+
+        .footer-right {
+            color: var(--text-bright);
+        }
+
+        .footer-right span.dim {
+            color: var(--text-dim);
+        }
+
+        .footer-right span.sep {
+            color: var(--text-sep);
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="screen">
+        <!-- HH Window (Hours) - Placed over left physical card -->
+        <div class="housing-window win-hh">
+            <div class="digit" id="hh">15</div>
+        </div>
+
+        <!-- MM Window (Minutes) - Placed over middle physical card -->
+        <div class="housing-window win-mm">
+            <div class="digit" id="mm">29</div>
+        </div>
+
+        <!-- SS Window (Seconds) - Placed over right physical card -->
+        <div class="housing-window win-ss">
+            <div class="digit" id="ss">36</div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-left">
+                <span id="date">2026.06.01</span>
+                <span class="pill" id="wday">MON</span>
+            </div>
+            <div class="footer-right">
+                BUSAN <span class="sep">&middot;</span> <span class="dim">SUNNY</span> <span class="sep">&middot;</span> 23&deg;C
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Update the clock every second to make the prototype feel real
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('hh').textContent = String(now.getHours()).padStart(2, '0');
+            document.getElementById('mm').textContent = String(now.getMinutes()).padStart(2, '0');
+            document.getElementById('ss').textContent = String(now.getSeconds()).padStart(2, '0');
+            
+            const days = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
+            document.getElementById('wday').textContent = days[now.getDay()];
+
+            const yyyy = now.getFullYear();
+            const mm = String(now.getMonth() + 1).padStart(2, '0');
+            const dd = String(now.getDate()).padStart(2, '0');
+            document.getElementById('date').textContent = `${yyyy}.${mm}.${dd}`;
+        }
+        
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+
+</body>
+</html>
