@@ -1,0 +1,368 @@
+# ============================================================================
+# Windows Precision Touchpad (PTP) — Waratah 디스크립터 소스
+# ============================================================================
+# MS PTP 공식 샘플 기반:
+#   https://learn.microsoft.com/en-us/windows-hardware/design/component-guidelines/touchpad-sample-report-descriptors
+# HID Usage Table 1.6:
+#   https://www.usb.org/sites/default/files/hut1_6.pdf
+#
+# ⚠ Waratah 생성 후 PTPHQA blob (Vendor Page 0xFF00) 수작업 추가 필요
+#
+# Input Report 1 비트 레이아웃 (29바이트 = 232비트):
+#   [40] × 5 Finger: Confidence(1) + TipSwitch(1) + ContactID(3) + Pad(3)
+#                     + X(16) + Y(16)
+#   [16] Scan Time (Unit=Seconds, Exp=-4)
+#   [8]  Contact Count (LogMax=127)
+#   [3]  Button 1, 2, 3
+#   [5]  Padding
+# ============================================================================
+
+[[settings]]
+generateCpp = true
+
+# ── Custom Usage Page 선언 (PTPHQA 지원용) ──
+[[usagePage]]
+id = 0xFF00
+name = 'PTPHQA Page'
+
+    [[usagePage.usage]]
+    id = 0xC5
+    name = 'PTPHQA Blob'
+    types = ['DF']
+
+# 인치 단위: 배율 10^-2 → 물리값을 0.01 inch 단위로 표현 (MS 샘플 준수)
+[[unit]]
+name = 'hundredths_inch'
+inch = [0.01, 1.0]
+
+# 초 단위: 배율 10^-4 → ScanTime 100µs 단위
+[[unit]]
+name = 'scan_time_unit'
+second = [0.0001, 1.0]
+
+# ═══════════════════════════════════════════════════════════════════
+# TLC 1: Windows Precision Touchpad (Digitizers / Touch Pad)
+# ═══════════════════════════════════════════════════════════════════
+[[applicationCollection]]
+usage = ['Digitizers', 'Touch Pad']
+
+    [[applicationCollection.inputReport]]
+    id = 1
+
+        # ── Finger 1 ──
+        [[applicationCollection.inputReport.logicalCollection]]
+        usage = ['Digitizers', 'Finger']
+
+            [[applicationCollection.inputReport.logicalCollection.variableItem]]
+            usage = ['Digitizers', 'Touch Valid']
+            logicalValueRange = [0, 1]
+
+            [[applicationCollection.inputReport.logicalCollection.variableItem]]
+            usage = ['Digitizers', 'Tip Switch']
+            logicalValueRange = [0, 1]
+
+            [[applicationCollection.inputReport.logicalCollection.variableItem]]
+            usage = ['Digitizers', 'Contact Identifier']
+            logicalValueRange = [0, 4]
+
+            [[applicationCollection.inputReport.logicalCollection.paddingItem]]
+            sizeInBits = 3
+
+            [[applicationCollection.inputReport.logicalCollection.variableItem]]
+            usage = ['Generic Desktop', 'X']
+            logicalValueRange = [0, 4095]
+            physicalValueRange = [0, 245]
+            unit = 'hundredths_inch'
+
+            [[applicationCollection.inputReport.logicalCollection.variableItem]]
+            usage = ['Generic Desktop', 'Y']
+            logicalValueRange = [0, 4095]
+            physicalValueRange = [0, 198]
+            unit = 'hundredths_inch'
+
+        # ── Finger 2 ──
+        [[applicationCollection.inputReport.logicalCollection]]
+        usage = ['Digitizers', 'Finger']
+
+            [[applicationCollection.inputReport.logicalCollection.variableItem]]
+            usage = ['Digitizers', 'Touch Valid']
+            logicalValueRange = [0, 1]
+
+            [[applicationCollection.inputReport.logicalCollection.variableItem]]
+            usage = ['Digitizers', 'Tip Switch']
+            logicalValueRange = [0, 1]
+
+            [[applicationCollection.inputReport.logicalCollection.variableItem]]
+            usage = ['Digitizers', 'Contact Identifier']
+            logicalValueRange = [0, 4]
+
+            [[applicationCollection.inputReport.logicalCollection.paddingItem]]
+            sizeInBits = 3
+
+            [[applicationCollection.inputReport.logicalCollection.variableItem]]
+            usage = ['Generic Desktop', 'X']
+            logicalValueRange = [0, 4095]
+            physicalValueRange = [0, 245]
+            unit = 'hundredths_inch'
+
+            [[applicationCollection.inputReport.logicalCollection.variableItem]]
+            usage = ['Generic Desktop', 'Y']
+            logicalValueRange = [0, 4095]
+            physicalValueRange = [0, 198]
+            unit = 'hundredths_inch'
+
+        # ── Finger 3 ──
+        [[applicationCollection.inputReport.logicalCollection]]
+        usage = ['Digitizers', 'Finger']
+
+            [[applicationCollection.inputReport.logicalCollection.variableItem]]
+            usage = ['Digitizers', 'Touch Valid']
+            logicalValueRange = [0, 1]
+
+            [[applicationCollection.inputReport.logicalCollection.variableItem]]
+            usage = ['Digitizers', 'Tip Switch']
+            logicalValueRange = [0, 1]
+
+            [[applicationCollection.inputReport.logicalCollection.variableItem]]
+            usage = ['Digitizers', 'Contact Identifier']
+            logicalValueRange = [0, 4]
+
+            [[applicationCollection.inputReport.logicalCollection.paddingItem]]
+            sizeInBits = 3
+
+            [[applicationCollection.inputReport.logicalCollection.variableItem]]
+            usage = ['Generic Desktop', 'X']
+            logicalValueRange = [0, 4095]
+            physicalValueRange = [0, 245]
+            unit = 'hundredths_inch'
+
+            [[applicationCollection.inputReport.logicalCollection.variableItem]]
+            usage = ['Generic Desktop', 'Y']
+            logicalValueRange = [0, 4095]
+            physicalValueRange = [0, 198]
+            unit = 'hundredths_inch'
+
+        # ── Finger 4 ──
+        [[applicationCollection.inputReport.logicalCollection]]
+        usage = ['Digitizers', 'Finger']
+
+            [[applicationCollection.inputReport.logicalCollection.variableItem]]
+            usage = ['Digitizers', 'Touch Valid']
+            logicalValueRange = [0, 1]
+
+            [[applicationCollection.inputReport.logicalCollection.variableItem]]
+            usage = ['Digitizers', 'Tip Switch']
+            logicalValueRange = [0, 1]
+
+            [[applicationCollection.inputReport.logicalCollection.variableItem]]
+            usage = ['Digitizers', 'Contact Identifier']
+            logicalValueRange = [0, 4]
+
+            [[applicationCollection.inputReport.logicalCollection.paddingItem]]
+            sizeInBits = 3
+
+            [[applicationCollection.inputReport.logicalCollection.variableItem]]
+            usage = ['Generic Desktop', 'X']
+            logicalValueRange = [0, 4095]
+            physicalValueRange = [0, 245]
+            unit = 'hundredths_inch'
+
+            [[applicationCollection.inputReport.logicalCollection.variableItem]]
+            usage = ['Generic Desktop', 'Y']
+            logicalValueRange = [0, 4095]
+            physicalValueRange = [0, 198]
+            unit = 'hundredths_inch'
+
+        # ── Finger 5 ──
+        [[applicationCollection.inputReport.logicalCollection]]
+        usage = ['Digitizers', 'Finger']
+
+            [[applicationCollection.inputReport.logicalCollection.variableItem]]
+            usage = ['Digitizers', 'Touch Valid']
+            logicalValueRange = [0, 1]
+
+            [[applicationCollection.inputReport.logicalCollection.variableItem]]
+            usage = ['Digitizers', 'Tip Switch']
+            logicalValueRange = [0, 1]
+
+            [[applicationCollection.inputReport.logicalCollection.variableItem]]
+            usage = ['Digitizers', 'Contact Identifier']
+            logicalValueRange = [0, 4]
+
+            [[applicationCollection.inputReport.logicalCollection.paddingItem]]
+            sizeInBits = 3
+
+            [[applicationCollection.inputReport.logicalCollection.variableItem]]
+            usage = ['Generic Desktop', 'X']
+            logicalValueRange = [0, 4095]
+            physicalValueRange = [0, 245]
+            unit = 'hundredths_inch'
+
+            [[applicationCollection.inputReport.logicalCollection.variableItem]]
+            usage = ['Generic Desktop', 'Y']
+            logicalValueRange = [0, 4095]
+            physicalValueRange = [0, 198]
+            unit = 'hundredths_inch'
+
+        # ── Scan Time (100µs 단위) ──
+        [[applicationCollection.inputReport.variableItem]]
+        usage = ['Digitizers', 'Scan Time']
+        logicalValueRange = [0, 65535]
+        physicalValueRange = [0, 65535]
+        unit = 'scan_time_unit'
+
+        # ── Contact Count ──
+        [[applicationCollection.inputReport.variableItem]]
+        usage = ['Digitizers', 'Contact Count']
+        logicalValueRange = [0, 5]
+
+        [[applicationCollection.inputReport.paddingItem]]
+        sizeInBits = 5
+
+        # ── Buttons ──
+        [[applicationCollection.inputReport.variableItem]]
+        usage = ['Button', 'Button 1']
+        logicalValueRange = [0, 1]
+
+    # ── Feature: Device Capabilities (Report ID 9) ──
+    # Contact Count Maximum + Pad Type (MS 샘플 준수)
+    [[applicationCollection.featureReport]]
+    id = 9
+
+        [[applicationCollection.featureReport.variableItem]]
+        usage = ['Digitizers', 'Contact Count Maximum']
+        logicalValueRange = [0, 5]
+
+        [[applicationCollection.featureReport.paddingItem]]
+        sizeInBits = 5
+
+        [[applicationCollection.featureReport.variableItem]]
+        usage = ['Digitizers', 'Pad Type']
+        logicalValueRange = [0, 1]
+
+        [[applicationCollection.featureReport.paddingItem]]
+        sizeInBits = 7
+
+    # ── Feature: Latency Mode (Report ID 6) ──
+    [[applicationCollection.featureReport]]
+    id = 6
+
+        [[applicationCollection.featureReport.variableItem]]
+        usage = ['Digitizers', 'Latency Mode']
+        logicalValueRange = [0, 1]
+
+# ═══════════════════════════════════════════════════════════════════
+[[applicationCollection]]
+usage = ['Digitizers', 'Device Configuration']
+
+    # ── Feature: PTPHQA Certification Status (Report ID 5) ──
+    [[applicationCollection.featureReport]]
+    id = 5
+
+        [[applicationCollection.featureReport.variableItem]]
+        usage = ['PTPHQA Page', 'PTPHQA Blob']
+        logicalValueRange = [0, 255]
+        count = 256
+
+    [[applicationCollection.featureReport]]
+    id = 4
+
+        [[applicationCollection.featureReport.variableItem]]
+        usage = ['Digitizers', 'Device Mode']  # Usage 0x52
+        logicalValueRange = [0, 10]
+
+    [[applicationCollection.featureReport]]
+    id = 7
+
+        [[applicationCollection.featureReport.variableItem]]
+        usage = ['Digitizers', 'Surface Switch']  # Usage 0x57
+        logicalValueRange = [0, 1]
+
+        [[applicationCollection.featureReport.variableItem]]
+        usage = ['Digitizers', 'Button Switch']  # Usage 0x58
+        logicalValueRange = [0, 1]
+
+# ═══════════════════════════════════════════════════════════════════
+# TLC 3: Mouse (Generic Desktop / Mouse) — PTP 필수 폴백
+# ═══════════════════════════════════════════════════════════════════
+[[applicationCollection]]
+usage = ['Generic Desktop', 'Mouse']
+
+    [[applicationCollection.inputReport]]
+    id = 8
+
+        [[applicationCollection.inputReport.physicalCollection]]
+        usage = ['Generic Desktop', 'Pointer']
+
+            [[applicationCollection.inputReport.physicalCollection.variableItem]]
+            usageRange = ['Button', 'Button 1', 'Button 2']
+            logicalValueRange = [0, 1]
+
+            [[applicationCollection.inputReport.physicalCollection.paddingItem]]
+            sizeInBits = 6
+
+            [[applicationCollection.inputReport.physicalCollection.variableItem]]
+            usage = ['Generic Desktop', 'X']
+            logicalValueRange = [-32767, 32767]
+            reportFlags = ['relative']
+
+            [[applicationCollection.inputReport.physicalCollection.variableItem]]
+            usage = ['Generic Desktop', 'Y']
+            logicalValueRange = [-32767, 32767]
+            reportFlags = ['relative']
+
+# ═══════════════════════════════════════════════════════════════════
+# TLC 4: Consumer Control (미디어 키)
+# ═══════════════════════════════════════════════════════════════════
+[[applicationCollection]]
+usage = ['Consumer', 'Consumer Control']
+
+    [[applicationCollection.inputReport]]
+    id = 2
+
+        [[applicationCollection.inputReport.variableItem]]
+        usage = ['Consumer', 'Play/Pause']
+        logicalValueRange = [0, 1]
+
+        [[applicationCollection.inputReport.variableItem]]
+        usage = ['Consumer', 'Scan Next Track']
+        logicalValueRange = [0, 1]
+
+        [[applicationCollection.inputReport.variableItem]]
+        usage = ['Consumer', 'Scan Previous Track']
+        logicalValueRange = [0, 1]
+
+        [[applicationCollection.inputReport.variableItem]]
+        usage = ['Consumer', 'Volume Increment']
+        logicalValueRange = [0, 1]
+
+        [[applicationCollection.inputReport.variableItem]]
+        usage = ['Consumer', 'Volume Decrement']
+        logicalValueRange = [0, 1]
+
+        [[applicationCollection.inputReport.variableItem]]
+        usage = ['Consumer', 'Mute']
+        logicalValueRange = [0, 1]
+
+# ═══════════════════════════════════════════════════════════════════
+# TLC 5: Keyboard (Numpad 전송용)
+# ═══════════════════════════════════════════════════════════════════
+[[applicationCollection]]
+usage = ['Generic Desktop', 'Keyboard']
+
+    [[applicationCollection.inputReport]]
+    id = 3
+
+        # Modifier Keys (8비트: LeftCtrl ~ RightGUI)
+        [[applicationCollection.inputReport.variableItem]]
+        usageRange = ['Keyboard/Keypad', 'Keyboard LeftControl', 'Keyboard Right GUI']
+        logicalValueRange = [0, 1]
+
+        # 8비트 패딩 (USB HID Boot Protocol 호환)
+        [[applicationCollection.inputReport.paddingItem]]
+        sizeInBits = 8
+
+        # Key Array (6키 × 8비트)
+        [[applicationCollection.inputReport.arrayItem]]
+        usageRange = ['Keyboard/Keypad', 'ErrorRollOver', 'Keyboard Application']
+        count = 6

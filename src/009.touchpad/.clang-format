@@ -1,0 +1,29 @@
+BasedOnStyle: Google
+ColumnLimit: 180
+
+# ── 정렬 옵션 (clang-format 16+) ──
+
+# 연속 대입문의 = 기호 정렬
+#   constexpr uint16_t kVendorId       = 0x0D0A;
+#   constexpr uint16_t kProductId      = 0x0001;
+AlignConsecutiveAssignments:
+  Enabled: true
+  AcrossEmptyLines: false
+  AcrossComments: true
+  AlignCompound: true
+  PadOperators: true
+
+# 연속 선언의 변수명 정렬 (타입 폭 통일)
+#   constexpr uint16_t kBcdHid      = ...;
+#   constexpr uint8_t  kCountryCode = ...;
+AlignConsecutiveDeclarations:
+  Enabled: true
+  AcrossEmptyLines: false
+  AcrossComments: true
+
+# 트레일링 주석(//) 정렬
+#   int a = 1;   // 첫 번째
+#   int b = 22;  // 두 번째
+AlignTrailingComments:
+  Kind: Always
+  OverEmptyLines: 0
